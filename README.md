@@ -8,12 +8,6 @@ For each milestone, you and your group will have to submit your implementation o
 - Wednesdays: 9am - 6pm
 - Thursdays: 9am - 6pm
 
-## Workshop, practicals, and help desks
-
-Workshop & Practical runs on Mondays, 10am-12pm, 14 Alliance, G29.
-
-Help desks runs after the workshops on Mondays, 12pm-2pm, 16 Alliance, Room 224. 
-
 ## Lab locations for testing
 
 ### Lab room 224, 16 Alliance
@@ -33,5 +27,9 @@ The Hargrave library team has kindly provided us with access to 4 arenas on leve
 ### Woodside space
 
 We are currently working with Woodside staff to organise arena space. This will be a work-in-progress throughout the semester and we will update the information here whenever we can. 
+
+## Help desks
+
+Help desks runs after the workshops on Mondays, 12pm-2pm, 16 Alliance, Room 224. 
 
 
