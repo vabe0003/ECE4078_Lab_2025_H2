@@ -22,7 +22,7 @@ The Hargrave library team has kindly provided us with access to 4 arenas on leve
 -  In line with our usual expectations about the use of Library space, the students should remain respectful of the needs of other Library users, especially as you will be working in groups. You are welcome to talk in the allocated space, but it will be important for them to be mindful of keeping noise to an appropriate level. For general expectations about conduct within the Library students may refer to our [Terms of Use](https://www.monash.edu/library/about/terms).
 -  It is also important to flag that you should not leave your belongings or equipment unattended in the space and that you will need to pack up at the end of your session. This is both to ensure a fair use of the space, and to minimise the risk of items going missing. Although we endeavour to maintain safe spaces, Library staff are unable to take responsibility for items left unattended in the space.
 
-![Library image](Images/library.png)
+<img src="Images/library.png" alt="Library image" width="500">
 
 ### Woodside space
 
