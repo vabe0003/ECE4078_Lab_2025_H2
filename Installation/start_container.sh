@@ -9,8 +9,8 @@ if [ -z "$1" ]; then
     exit 1
 fi
 # Check if the provided host OS is supported
-if [ "$1" != "linux" ] && [ "$1" != "macos" ] && [ "$1" != "windows" ]; then
-    echo "Unsupported host OS: $1. Supported OS are: linux, macos, windows."
+if [ "$1" != "linux" ] && [ "$1" != "macos" ]; then
+    echo "Unsupported host OS: $1. Supported OS are: linux and macos."
     exit 1
 fi
 # Set the host OS variable
@@ -79,22 +79,22 @@ elif [ "$HOST_OS" == "macos" ]; then
     fi
     exit 0
 
-elif [ "$HOST_OS" == "windows" ]; then
-    # For Windows, we assume XLaunch (VcXsrv) is running with access control disabled.
-    DISPLAY_VAR="host.docker.internal:0.0"
+# elif [ "$HOST_OS" == "windows" ]; then
+#     # For Windows, we assume XLaunch (VcXsrv) is running with access control disabled.
+#     DISPLAY_VAR="host.docker.internal:0.0"
 
-    if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
-        echo "Starting existing container '$CONTAINER_NAME'..."
-        docker start -ai $CONTAINER_NAME
-    else
-        echo "Container '$CONTAINER_NAME' does not exist. Starting Docker container for host OS: $HOST_OS..."
-        docker run -it \
-            -e DISPLAY=$DISPLAY_VAR \
-            --privileged \
-            --name $CONTAINER_NAME \
-            $IMAGE_NAME
-    fi
-    exit 0
+#     if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
+#         echo "Starting existing container '$CONTAINER_NAME'..."
+#         docker start -ai $CONTAINER_NAME
+#     else
+#         echo "Container '$CONTAINER_NAME' does not exist. Starting Docker container for host OS: $HOST_OS..."
+#         docker run -it \
+#             -e DISPLAY=$DISPLAY_VAR \
+#             --privileged \
+#             --name $CONTAINER_NAME \
+#             $IMAGE_NAME
+#     fi
+#     exit 0
 
 else
     echo "Unsupported host OS: $HOST_OS"
