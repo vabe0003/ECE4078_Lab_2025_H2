@@ -99,10 +99,6 @@ You can pull the image and run based on your preferences. However, a script `sta
 ./start_container.sh <host_OS> <optional_container_name> <optional_image_name>
 ```
 
-If using Windows host, run:
-```
-wsl ./start_container.sh windows
-```
 `<host_OS>` argument should be set based on your host. Options are `windows`, `linux` or `macos`. The `<optional_container_name>` and `<optional_image_name>` arguments can be omitted as a default name, `ece4078_2025_lab` is chosen. If you want a specific name, you can set these arguments. This script returns the name of the running container (`<container_name>`). Take note of it as it can be useful to attach terminals from your host to the container where necessary. To do this:
 ```
 docker attach <container_name>
@@ -111,7 +107,7 @@ docker attach <container_name>
 <div style="page-break-after: always"></div>
 
 # Optional (Using VSCode Editor)
-You can use VSCode IDE for development. It also supports integrated terminal.
+You can use VSCode IDE for development in the contsiner. It also supports integrated terminal.
 - Go to extensions and search for docker (`Dev Containers`). Install the extension.
 - Go to `Remote Explorer` annd refresh the list of `Dev Containers`. Your running container should show up. If list is empty, it means the container is not running. Follow steps [above](#running-the-container) to run the container.
 - Right click on the running container and `Attach in New Window`
