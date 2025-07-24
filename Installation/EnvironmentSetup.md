@@ -99,7 +99,7 @@ You can pull the image and run based on your preferences. However, a script `sta
 ./start_container.sh <host_OS> <optional_container_name> <optional_image_name>
 ```
 
-`<host_OS>` argument should be set based on your host. Options are `windows`, `linux` or `macos`. The `<optional_container_name>` and `<optional_image_name>` arguments can be omitted as a default name, `ece4078_2025_lab` is chosen. If you want a specific name, you can set these arguments. This script returns the name of the running container (`<container_name>`). Take note of it as it can be useful to attach terminals from your host to the container where necessary. To do this:
+`<host_OS>` argument should be set based on your host. Options are `linux` or `macos`. The `<optional_container_name>` and `<optional_image_name>` arguments can be omitted as a default name, `ece4078_2025_lab` is chosen. If you want a specific name, you can set these arguments. This script returns the name of the running container (`<container_name>`). Take note of it as it can be useful to attach terminals from your host to the container where necessary. To do this:
 ```
 docker attach <container_name>
 ```
