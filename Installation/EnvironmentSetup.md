@@ -64,7 +64,7 @@ It is recommended that you clone **via SSH** so it's easier to set up version co
  Then:
 
 1. Clone this repository to your local machine **via SSH**. 
-2. Install the [XQuartz package here](https://www.xquartz.org/)
+2. Install the [XQuartz package here](https://www.xquartz.org/). Once installed, open XQuartz and go to `Settings > Security` and tick the option for `Allow connections from network clients`, then restart XQuartz.
 3. Open up your terminal and run `defaults write org.xquartz.X11 enable_iglx -bool true`
 4. Launch OrbStack, then go to terminal again and run `docker pull adedayoakinade/ece4078:noetic`
 5. After connecting to the robot's hotspot, run the terminal command `./start_container.sh macos`. A warning may appear, about the image's platform not matching host platform. Ignore that error. Also, your terminal should have user `ece4078@...` now.

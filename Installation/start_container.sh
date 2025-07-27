@@ -73,9 +73,13 @@ elif [ "$HOST_OS" == "macos" ]; then
     else
         echo "Starting new container '$CONTAINER_NAME' on macOS..."
         docker run -it -e DISPLAY="${PC_IP}:0" \
+          -e SDL_VIDEODRIVER=x11 \
+          -e LIBGL_ALWAYS_INDIRECT=1 \
+          -e LIBGL_ALWAYS_SOFTWARE=1 \
           --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
           --name $CONTAINER_NAME \
           $IMAGE_NAME
+        #   --volume="../../ECE4078_Lab_2025/:/home/ece4078/ECE4078_Lab/" \
     fi
     exit 0
 
