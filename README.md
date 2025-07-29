@@ -12,7 +12,7 @@ For each milestone, you and your group will have to submit your implementation o
 
 ### Lab room 224, 16 Alliance
 
-You have been provided card access to room 224 outside of lab hours (but during office hours - ie. up to 6pm, and no weekends) so you may use the space for testing your robots outside of classes. However, be mindful there are other classes that will run in room 224, so please vacate the room when other classes are running. There will be no official booking system through us, so please provide usage of the arenas fairly to each other.
+You will not receive card access to room 224 outside of lab hours due to OH&S reasons. However, the teaching team might open up the labs during the busy weeks (ie. close to milestones/final demo) for you to use the space for testing your robots outside of classes during business hours. This will be communicated through the forums. We highly encourage you to get all the data you need during your allocated lab session, and to use the other existing arena spaces for testing. 
 
 ### Hargrave library
 
