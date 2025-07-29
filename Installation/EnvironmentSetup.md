@@ -54,6 +54,18 @@ conda deactivate
 
 
 ## Installing OrbStack on MacOS
+
+**NOTE** If you already have experience with using Anaconda Navigator, and run into issues with dockerised containers, use Anaconda Navigator to create your new virtual environment.
+1. Install Anaconda Navigator
+2. Go to "Environments" tab on the left side of the app
+3. Click on "Create" on the bottom left of the app
+4. Name your environment something useful like "ECE4078_Lab"
+5. Check "Python" and make sure the Python version selected is on 3.9.23 then click "Create"
+6. Once your environment's created, click on your environment name, click the play button and "Open Terminal"
+7. Change directory to the Installation folder of this repository and run `pip install -r requirements.txt`
+8. And now you should have your virtual environment set up for the labs!
+
+Otherwise, if you prefer to use a dockerised container on Orbstack, you may ignore the above instructions and continue from here...
 Download and install [OrbStack](https://orbstack.dev/download). Note, choose the correct chip architecture (e.g. newer Macs have the Apple Silicon).
 
 ### Setting up Git Access
