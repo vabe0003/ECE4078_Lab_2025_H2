@@ -18,7 +18,7 @@ This README provides a step-by-step guide on setting up your environment and con
 
 # Setting up your device
 
-For Windows users, you will install all the required software via [Anaconda](https://www.anaconda.com/download). For Mac users, install [OrbStack](https://orbstack.dev/download) on your computer. For Linux user, just install `docker` according to your distro. The following sections will try to summarise the installation process for each OS.
+For Windows users, you will install all the required software via [Anaconda](https://www.anaconda.com/download). Note that if you are cloning the repository in Windows, **make sure that the repository is not cloned with OneDrive as this causes permission errors**. For Mac users, install [OrbStack](https://orbstack.dev/download) on your computer. For Linux user, just install `docker` according to your distro. The following sections will try to summarise the installation process for each OS. 
 
 ## Installing conda and required software on Windows
 
