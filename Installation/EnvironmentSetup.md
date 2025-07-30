@@ -132,6 +132,7 @@ You now get a full environment where you can drop files/folders from host to con
 
 # Troubleshooting
 - [MacOS] If you have trouble with using Git within the docker container due to lack of permissions, try running `sudo chown -R ece4078:ece4078 /home/ece4078/ECE4078_Lab/` in your dev container terminal.
+- [Windows] If you encounter the error "PermissionError: [WinError 5] Access is denied: 'pibot_dataset/'", please make sure you have not cloned the folder into OneDrive. If you have done the initial clone into OneDrive, you cannot just copy the folder over, you will need to reclone the repository into another folder on your drive, as the permissions for that folder will not be set correctly otherwise
 
 <div style="page-break-after: always"></div>
 
