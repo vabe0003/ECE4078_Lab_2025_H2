@@ -5,12 +5,7 @@ This README provides a step-by-step guide on setting up your environment and con
     - [Windows - Installing Anaconda](#installing-conda-and-requirements-on-windows)
     - [MacOS - Installing OrbStack](#installing-orbstack-on-macos)
     - [Linux Ubuntu - Installing Docker](#installing-docker-on-linux-ubuntu)
-- [Running the Container](#running-the-container)
-    - [Running on the Physical Robot](#running-on-the-physical-robot)
-        - [Inside the robot kit](#inside-the-kit)
-        - [Powering on and connecting to the robot](#powering-on-and-connecting-to-the-robot)
-        - [Running codes on the robot](#running-codes-on-the-robot)
-        - [Disconnecting and shutting down the robot](#disconnecting-and-shutting-down-the-robot)
+    - [Running the Container (Linux and Mac)](#running-the-container)
 - [Optional (Using VSCode Editor)](#optional-using-vscode-editor)
 - [Troubleshooting](#troubleshooting)
 
