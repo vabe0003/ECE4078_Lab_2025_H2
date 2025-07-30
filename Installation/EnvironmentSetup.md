@@ -17,7 +17,9 @@ For Windows users, you will install all the required software via [Anaconda](htt
 
 ## Installing conda and required software on Windows
 
-1. Install [Anaconda](https://www.anaconda.com/download)
+1. Install [Anaconda](https://www.anaconda.com/download). We recommend selecting "Add Anaconda3 to my PATH environment variable" as shown below. If you already have Anaconda installed and do not have it added to PATH but would like it to be then we have instrucitons to do so [below](#adding-anaconda-to-path).
+
+    <img src="./pics/anaconda%20install%20settings.png" height="300" alt="Anaconda Install settings">
 
 2. Open Anaconda Navigator
 
@@ -33,20 +35,54 @@ For Windows users, you will install all the required software via [Anaconda](htt
 
 8. Click "Import" and wait for the importing process to finish
 
-9. In your terminal type the following where ```ENVNAME``` is the name you set for the environment in step 7
+### Using the Anaconda env
+
+#### In the terminal
+
+If you selected add to path in step 1 then in your terminal you can type the following where ```ENVNAME``` is the name you set for the environment in step 7
 
 ```
 conda activate ENVNAME
 ```
 
-10. You should see ```(ENVNAME)``` on the left of the input line of the terminal. This means you are in the env and all of the relevant packages should be avaliable to you. You can install new packages through the conda terminal or navigator as well as using pip. Please do not update packages that are already installed as you may create conflicts with the codebase.
+You should see ```(ENVNAME)``` on the left of the input line of the terminal. This means you are in the env and all of the relevant packages should be avaliable to you. You can install new packages through the conda terminal or navigator as well as using pip. Please do not update packages that are already installed as you may create conflicts with the codebase.
 
-11. Enter the following to exit the env
+Enter the following to exit the env
 
 ```
 conda deactivate
 ```
 
+Otherwise you can still use the provided "Anaconda Prompt" either by searching in windows or launching it from the Anaconda Navigator home page.
+
+#### In VS Code
+
+1. Open a .py file in vs code
+
+2. Click on the python version number in the bottom right corner of the window
+
+3. The environment your Anaconda environments should appear in the list as options which you can select
+
+4. The version number in the bottom right corner should update to reflect the selection you made.
+
+If you added Anaconda to path then you can also call conda activate in the vs code terminal to ues it there.
+
+### Adding Anaconda to PATH
+If you forgot to check the box during install, or already had Anaconda installed without adding it to PATH, then you can use the following instructions to add it to your systme PATH environment variable.
+
+1. Search for ```Edit the system environment variables``` in the start menu or search bar.
+
+2. Click the ```Environment Variables...``` button at the bottom the Sytem Properties window.
+
+3. In the top box (labelled "User variables for *username*") select the ```Path``` variable and click the ```Edit``` button.
+
+4. In the "Edit environment variable" window click the ```New``` button on the right and add the path of your anaconda installation. This is likely something like ```C:\Users\<USER>\anaconda3``` if you did a user level install or ```C:\ProgramData\Anaconda3``` if you did a system level install.
+
+5. Repeat step 4 but this time at ```\scripts``` to the end of the file path e.g. ```C:\Users\<USER>\anaconda3\scripts```
+
+6. Select ```OK``` on all of the windows that opened during this process.
+
+7. Close any terminals that were open before making these changes so they can refresh their PATH list when opened again.
 
 ## Installing OrbStack on MacOS
 
@@ -128,6 +164,8 @@ You now get a full environment where you can drop files/folders from host to con
 # Troubleshooting
 - [MacOS] If you have trouble with using Git within the docker container due to lack of permissions, try running `sudo chown -R ece4078:ece4078 /home/ece4078/ECE4078_Lab/` in your dev container terminal.
 - [Windows] If you encounter the error "PermissionError: [WinError 5] Access is denied: 'pibot_dataset/'", please make sure you have not cloned the folder into OneDrive. If you have done the initial clone into OneDrive, you cannot just copy the folder over, you will need to reclone the repository into another folder on your drive, as the permissions for that folder will not be set correctly otherwise
+- [Windows] If you get an error along the lines of "The term 'conda' is not recognized as a name of a cmdlet, function, script file, or executable program." then Anaconda has not been added to your system PATH environment variables. You can either [add Anaconda to your system PATH](#adding-anaconda-to-path) or use Anaconda Prompt from the system search or launched from Anaconda Navigator.
+
 
 <div style="page-break-after: always"></div>
 
