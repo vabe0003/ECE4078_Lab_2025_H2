@@ -19,7 +19,7 @@ or if you are making your own virtual environment rather than the provided docke
 You will implement keyboard teleoperations by editing [line 142 - 155 of operate.py](operate.py#L142).
   - **Hint:** check out how the stop control is implemented at [line 158](operate.py#L158) and the wheel control function at [line 57-74](operate.py#L57).
   - You will also need [the pics folder for painting the GUI](pics/) and [the util folder for utility scripts](util/), already contained within the repo.
-  - To control the physical robot, you will need to run ```python3 operate.py``` (see [Installation Guide for physical robot](../Installation/EnvironmentSetup.md#running-on-the-physical-robot)).
+  - To control the physical robot, you will need to run ```python3 operate.py``` (see [Setup guide for how to connect to the physical robot](../Installation/HowToConnect.md)).
   - Below is what the teleoperation GUI (and loading menu) looks like:
 
 ![GUI Menu](pics/Menu.png?raw=true "GUI Menu")
