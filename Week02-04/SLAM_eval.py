@@ -129,6 +129,27 @@ if __name__ == '__main__':
     rmse, residuals = compute_rmse(us_vec_aligned, gt_vec)
     print("The RMSE after alignment: {}".format(rmse))
 
+    # Initialising evaluation parameters
+    base = 16
+    upper_bound = 0.2
+    lower_bound = 0.02
+    slam_rating = (upper_bound - rmse)/(upper_bound - lower_bound)
+
+    if slam_rating > 1:
+        slam_rating = 1
+    elif slam_rating < 0:
+        slam_rating = 0
+
+    markers_found = 0
+    for i in range(1, 11):
+        if i in taglist:
+            markers_found += 1
+
+    slam_score = (base**slam_rating - 1)/(base - 1) * 80    
+    score_calculation = (slam_score + markers_found * 2) * markers_found/10
+
+    print("Map score: {}".format(score_calculation))
+
     print()
     print("Pred Locations")
     print(taglist)
