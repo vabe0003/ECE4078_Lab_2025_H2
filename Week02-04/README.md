@@ -103,3 +103,13 @@ Please see [M1 marking instructions](M1_marking_instructions.md)
 - The state vector x will be appended with the ArUco marker measurements. Take a note of the location of x that should be updated in the motion model.
 - In the prediction step, we should update the mean belief by driving the robot.
 - The example baseline, intrinsic and scale parameters on Github should be relatively close to your own parameters, though running your robot with those parameters may result in suboptimal SLAM performance. If you calibrate your robot and get vastly different values, consider double checking your calibration scripts to make sure no miscalculations are made.
+
+---
+## M2
+From next milestone onwards, we will be using plastic fruits and vegetables. If you wish to prepare your group by purchasing the fruits and veg we are going to be using, you can do so at these links:
+
+- https://amzn.asia/d/4a1usfd
+- https://amzn.asia/d/jdDttg4
+
+The items take a few weeks to come through. Note - this is NOT an endorsement for the vendor and we are not affiliated with the supplier
+
