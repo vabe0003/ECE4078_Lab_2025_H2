@@ -54,9 +54,10 @@ Complete [wheel_calibration.py](calibration/wheel_calibration.py) by completing 
 
 You can mark a 1m long straight line with masking tape on the floor, and use it as a guide to check if the robot has travelled exactly (as close as possible) 1m. Masking tape and measuring tape will be provided to you in the lab.
 
-[New] Please make sure to pull the latest changes of the calibration files. We had mistakenly not updated the default IP address to refer to the robot's network IP address. If you would prefer to directly edit the file yourself, you can change line 99 to the following:
+[New] Please make sure to pull the latest changes of the calibration files. We had mistakenly not updated the default IP address to refer to the robot's network IP address. If you would prefer to directly edit the file yourself, you can change lines 99-100 to the following:
 
 - ```parser.add_argument("--ip", metavar='', type=str, default='192.168.50.1')```
+- ```parser.add_argument("--port", metavar='', type=int, default=8080)```
 
 #### Step 3) Camera calibration
 Complete [calib_pic.py](calibration/calib_pic.py) using your C1 teleoperation codes and run the completed script using ```python3 calib_pic.py```, then press ENTER to take a calibration photo (It will be saved as [calib_0.png](calibration/images/calib_0.png)) in your [Images folder](calibration/images/). You should place the robot fairly close to the calibration rig to get a good view of the 8 dots. The photo should look something like this:
