@@ -17,6 +17,7 @@ In M1, the robot will perform Simultaneous Localisation And Mapping (SLAM) in a 
 
 You will use your C1 (teleoperation) code to drive your robot around this unknown supermarket strategically, so that it can estimate where things are (creating a map of the arena with marker coordinates) and where itself is at any given time using its camera and motion model.
 
+Additionally, make sure you **do not fork the public repository** as forked repositories are always public and will cause **academic integrity issues**.
 
 ### ArUco markers
 [ArUco markers](http://www.uco.es/investiga/grupos/ava/node/26) are square fiducial markers introduced by Rafael Muñoz and Sergio Garrido. OpenCV contains a trained [function](https://docs.opencv.org/trunk/d5/dae/tutorial_aruco_detection.html) that detects the ArUco markers, which will be used in this project (the dictionary we used to generate the markers was ```cv2.aruco.DICT_4X4_100```). PenguinPi will be using these ArUco markers as aisle labels to help it map the environment and locate itself. 
@@ -52,6 +53,10 @@ Prior to working on this week's materials, please make sure you do the following
 Complete [wheel_calibration.py](calibration/wheel_calibration.py) by completing the required functionality and filling in the lines of code (computing the [scale parameter](calibration/wheel_calibration.py#L46) and the [baseline parameter](calibration/wheel_calibration.py#L89)), run the [wheel calibration script](calibration/wheel_calibration.py) using the command ```python3 wheel_calibration.py```. This script will set the robot driving forward, and then spinning at various velocities, for durations that you specify, in order to compute the scale and baseline parameters for wheel calibration.
 
 You can mark a 1m long straight line with masking tape on the floor, and use it as a guide to check if the robot has travelled exactly (as close as possible) 1m. Masking tape and measuring tape will be provided to you in the lab.
+
+[New] Please make sure to pull the latest changes of the calibration files. We had mistakenly not updated the default IP address to refer to the robot's network IP address. If you would prefer to directly edit the file yourself, you can change line 99 to the following:
+
+- ```parser.add_argument("--ip", metavar='', type=str, default='192.168.50.1')```
 
 #### Step 3) Camera calibration
 Complete [calib_pic.py](calibration/calib_pic.py) using your C1 teleoperation codes and run the completed script using ```python3 calib_pic.py```, then press ENTER to take a calibration photo (It will be saved as [calib_0.png](calibration/images/calib_0.png)) in your [Images folder](calibration/images/). You should place the robot fairly close to the calibration rig to get a good view of the 8 dots. The photo should look something like this:
