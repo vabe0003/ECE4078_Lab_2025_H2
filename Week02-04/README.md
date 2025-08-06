@@ -56,6 +56,7 @@ You can mark a 1m long straight line with masking tape on the floor, and use it 
 
 [New] Please make sure to pull the latest changes of the calibration files. We had mistakenly not updated the default IP address to refer to the robot's network IP address. If you would prefer to directly edit the file yourself, you can change lines 99-100 (or similar looking lines if you have made changes to the file) to the following:
 
+
 - ```parser.add_argument("--ip", metavar='', type=str, default='192.168.50.1')```
 - ```parser.add_argument("--port", metavar='', type=int, default=8080)```
 
