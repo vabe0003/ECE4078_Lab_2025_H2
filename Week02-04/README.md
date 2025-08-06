@@ -54,7 +54,7 @@ Complete [wheel_calibration.py](calibration/wheel_calibration.py) by completing 
 
 You can mark a 1m long straight line with masking tape on the floor, and use it as a guide to check if the robot has travelled exactly (as close as possible) 1m. Masking tape and measuring tape will be provided to you in the lab.
 
-[New] Please make sure to pull the latest changes of the calibration files. We had mistakenly not updated the default IP address to refer to the robot's network IP address. If you would prefer to directly edit the file yourself, you can change lines 99-100 to the following:
+[New] Please make sure to pull the latest changes of the calibration files. We had mistakenly not updated the default IP address to refer to the robot's network IP address. If you would prefer to directly edit the file yourself, you can change lines 99-100 (or similar looking lines if you have made changes to the file) to the following:
 
 - ```parser.add_argument("--ip", metavar='', type=str, default='192.168.50.1')```
 - ```parser.add_argument("--port", metavar='', type=int, default=8080)```
