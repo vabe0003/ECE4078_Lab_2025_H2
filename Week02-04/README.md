@@ -69,6 +69,8 @@ Once you have taken the `calib_0.png` photo with the robot, run ```python3 camer
 
 **Note:** You can make your own calibration rig for development outside of the labs using [the print file provided](diy_prints/LabPrintingRig_A3.pdf) (notice the small square in the top left corner in addition to the dots). The size of the rig is specified in [calibration-fixture.png](diy_prints/calibration-fixture.png). Please print the pdf using **A3-size papers** and beware of printing rescaling. Make sure that the panels are at 90deg to each other and the distance between the calibration dots are as specified when making the rig, as this will influence the accuracy of your estimations. We will bring a calibration rig to the labs for you to perform the calibration during the lab sessions too.
 
+[New] - If you are on Windows, or otherwise do not have the machinevisiontoolbox, run the ```camera_calibration_2.py``` script instead. 
+
 ---
 ### SLAM
 [operate.py](operate.py) makes use of the camera and wheels' [calibrated parameters](calibration/param) and the [SLAM](slam/) components to produce a map saved as ```slam.txt``` in the ```lab_output``` folder. This SLAM map contains a list of identified ArUco markers, their locations and the covariances of the estimation. Note: remember to replace the [keyboard control section](operate.py#L200) with your codes from C1.
