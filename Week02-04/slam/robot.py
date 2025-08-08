@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 class Robot:
     def __init__(self, wheels_width, wheels_scale, camera_matrix, camera_dist):
@@ -74,10 +75,31 @@ class Robot:
         lin_vel, ang_vel = self.convert_wheel_speeds(drive_meas.left_speed, drive_meas.right_speed)
 
         dt = drive_meas.dt
-        th = self.state[2]
+        th = self.state[2].item()
         
         # TODO: add your codes here to compute DFx using lin_vel, ang_vel, dt, and th
-
+        if ang_vel == 0:
+            return np.array([
+                # ∂x'/∂x  ∂x'/∂y  ∂x'/∂θ 
+                [ 1,      0,      lin_vel * -math.sin(th) * dt ],
+                # ∂y'/∂x  ∂y'/∂y  ∂y'/∂θ
+                [ 0,      1,      lin_vel *  math.cos(th) * dt ],
+                # ∂θ'/∂x  ∂θ'/∂y  ∂θ'/∂θ
+                [ 0,      0,      1                         ],
+            ])
+        else:
+            R = lin_vel / ang_vel
+            dth = ang_vel * dt
+            return np.array([
+                # ∂x'/∂x  ∂x'/∂y  ∂x'/∂θ 
+                [ 1,      0,      R * (-math.cos(th) + math.cos(th + dth))  ],
+                # ∂y'/∂x  ∂y'/∂y  ∂y'/∂θ
+                [ 0,      1,      R * (-math.sin(th) + math.sin(th + dth)) ],
+                # ∂θ'/∂x  ∂θ'/∂y  ∂θ'/∂θ
+                [ 0,      0,      1                                    ],
+            ])
+        
+        
         return DFx
 
     def derivative_measure(self, markers, idx_list):
@@ -111,26 +133,43 @@ class Robot:
 
         return DH
     
+    
     def covariance_drive(self, drive_meas):
-        # Derivative of lin_vel, ang_vel w.r.t. left_speed, right_speed
-        Jac1 = np.array([[self.wheels_scale/2, self.wheels_scale/2],
-                [-self.wheels_scale/self.wheels_width, self.wheels_scale/self.wheels_width]])
-        
+        # Derivative of lin_vel (V) and ang_vel (ω) w.r.t. left_speed and right_speed
+        Jac1 = np.array([
+            # dV/dv_l              # dV/dv_r
+            [ 1/2,                  1/2                 ],
+            # dω/dv_l               # dω/dv_r
+            [ -1/self.wheels_width,  1/self.wheels_width ]
+        ])
+
+        # Compute linear and angular velocities from wheel speeds
         lin_vel, ang_vel = self.convert_wheel_speeds(drive_meas.left_speed, drive_meas.right_speed)
         th = self.state[2]
         dt = drive_meas.dt
-        th2 = th + dt*ang_vel
+        th2 = th + dt * ang_vel
 
-        # Derivative of x,y,theta w.r.t. lin_vel, ang_vel
-        Jac2 = np.zeros((3,2))
-        
-        # TODO: add your codes here to compute Jac2 using lin_vel, ang_vel, dt, th, and th2
+        # Derivative of x, y, theta w.r.t. lin_vel and ang_vel
+        Jac2 = np.zeros((3, 2))
+        Jac2[0, 0] = (np.sin(th2) - np.sin(th)) / ang_vel if ang_vel != 0 else dt * np.cos(th)
+        Jac2[0, 1] = (lin_vel * (np.cos(th2) - np.cos(th))) / (ang_vel**2) + \
+                    (lin_vel * dt * np.sin(th2)) / ang_vel if ang_vel != 0 else 0.0
+        Jac2[1, 0] = (-np.cos(th2) + np.cos(th)) / ang_vel if ang_vel != 0 else dt * np.sin(th)
+        Jac2[1, 1] = (lin_vel * (np.sin(th2) - np.sin(th))) / (ang_vel**2) + \
+                    (lin_vel * dt * np.cos(th2)) / ang_vel if ang_vel != 0 else 0.0
+        Jac2[2, 0] = 0.0
+        Jac2[2, 1] = dt
 
-        # Derivative of x,y,theta w.r.t. left_speed, right_speed
-        Jac = Jac2 @ Jac1
+        # Combine Jacobians, applying wheel scale factor here
+        Jac = Jac2 @ (self.wheels_scale * Jac1)
 
-        # Compute covariance
-        cov = np.diag((drive_meas.left_cov, drive_meas.right_cov))
-        cov = Jac @ cov @ Jac.T
-        
+        # If a wheel is not moving, treat its measurement as perfectly accurate
+        left_cov = 0 if drive_meas.left_speed == 0 else drive_meas.left_cov
+        right_cov = 0 if drive_meas.right_speed == 0 else drive_meas.right_cov
+        wheel_speed_var = np.diag((left_cov, right_cov))
+
+        # Compute process noise covariance
+        cov = Jac @ wheel_speed_var @ Jac.T
+
         return cov
+
