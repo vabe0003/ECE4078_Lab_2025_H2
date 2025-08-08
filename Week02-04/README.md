@@ -13,7 +13,7 @@
 ## Introduction
 Imagine your robot arrives at a new supermarket which has an unknown layout. It can read aisle labels with its camera and remembers how it has moved since it started at location (0,0,0) (x,y,theta). How can it figure out where things are and where itself is positioned at a given time?
 
-In M1, the robot will perform Simultaneous Localisation And Mapping (SLAM) in a small arena (supermarket), which contains 10 ArUco markers (aisle labels). The robot will always start at the centre of the map, i.e., (x,y,theta) = (0,0,0). 
+In M1, the robot will perform Simultaneous Localisation And Mapping (SLAM) in a small arena (supermarket), which contains 10 ArUco markers (aisle labels). The robot will always start at the centre of the map, i.e., (x,y,theta) = (0,0,0). In addition to the markers, we will be including physical barriers within the environment.
 
 You will use your C1 (teleoperation) code to drive your robot around this unknown supermarket strategically, so that it can estimate where things are (creating a map of the arena with marker coordinates) and where itself is at any given time using its camera and motion model.
 
