@@ -12,7 +12,7 @@ For each milestone, you and your group will have to submit your implementation o
 
 ### Lab room 224, 16 Alliance
 
-You will not receive card access to room 224 outside of lab hours due to OH&S reasons. However, the teaching team might open up the labs during the busy weeks (ie. close to milestones/final demo) for you to use the space for testing your robots outside of classes during business hours. This will be communicated through the forums. We highly encourage you to get all the data you need during your allocated lab session, and to use the other existing arena spaces for testing. 
+Card access requirement for room 224 has been removed, so you can freely enter/exit the space between 8am to 8pm on weekdays. As a general reminder - lab space access will be revoked if there are any issues we find in the room (ie. you shouldn't be eating/drinking in the labs). Please clean up after yourselves, and to not damage the equipment in the lab room. 
 
 ### Hargrave library
 
