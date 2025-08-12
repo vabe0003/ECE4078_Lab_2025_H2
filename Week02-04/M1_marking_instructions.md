@@ -28,7 +28,9 @@ We will also be conducting a viva (a short interview), to confirm each team memb
 
 It is therefore important to be thoroughly prepared to explain your own contributions and have a basic understanding of how the other parts of the code fit into the overall project.
 
-Total project marks will be scaled based on the level of understanding demonstrated in the Viva, with the full marks being no change and a reduction as the category code drops (see the table below for the marking criteria).
+Total project marks will be scaled based on the level of understanding demonstrated in the Viva, with the full marks being no change and a reduction as the category code drops (see the table below for the marking criteria). Your total for M1 will be:
+
+**Final_M1_Mark = M1_Mark * viva**
 
 If you miss (do not attend) your project interview, you may receive a 0.
 
