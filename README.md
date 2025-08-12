@@ -12,7 +12,13 @@ For each milestone, you and your group will have to submit your implementation o
 
 ### Lab room 224, 16 Alliance
 
-Card access requirement for room 224 has been removed, so you can freely enter/exit the space between 8am to 8pm on weekdays. As a general reminder - lab space access will be revoked if there are any issues we find in the room (ie. you shouldn't be eating/drinking in the labs). Please clean up after yourselves, and to not damage the equipment in the lab room. 
+Card access requirement for room 224 has been removed, so you can freely enter/exit the space between 8am to 8pm on weekdays. As a general reminder - lab space access will be revoked if there are any issues we find in the room (ie. you shouldn't be eating/drinking in the labs). Please clean up after yourselves, and to not damage the equipment in the lab room. Keyboard, mouse, and monitors needs to be plugged in especially if you are the last group leaving the room. 
+
+The room is available between 8am to 8pm. There are classes in room 224 at the following times:
+- Tuesdays: 9am - 3pm
+- Wednesdays: 9am - 6pm
+- Thursdays: 9am - 6pm
+- Friday: 1pm - 4pm (not ECE4078/5178) 
 
 ### Hargrave library
 
