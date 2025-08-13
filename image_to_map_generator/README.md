@@ -13,7 +13,7 @@ you are caught using this code to generate your ground truth maps for during any
 ### Python version
 This code has only been validated in later versions of python (3.9/10) onwards, so it will likely not work on the Ubuntu 18.04 which uses Python 3.6.9.
 
-[New] **We can confirm it does not currently work for versions greater than 3.10.**
+[New] **We can confirm it does not currently work for versions greater than 3.10 or less than 3.7.**
 
 ## Python Package Version differences
 There are potentially package version clashes between the PenguinPi robot code and this Image-to-Map Generator, as a result we recommend you install the packages for this code in a separate python virtual environment.
