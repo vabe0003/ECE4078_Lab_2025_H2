@@ -78,6 +78,8 @@ class Robot:
         th = self.state[2].item()
         
         # TODO: add your codes here to compute DFx using lin_vel, ang_vel, dt, and th
+
+
         if ang_vel == 0:
             return np.array([
                 # ∂x'/∂x  ∂x'/∂y  ∂x'/∂θ 
