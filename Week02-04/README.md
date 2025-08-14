@@ -7,6 +7,8 @@
     - [Calibration](#calibration-week-3)
     - [SLAM](#slam-week-4-5)
 - [M1 Marking](#M1-marking)
+    - [Evaluation scheme](#evaluation-scheme)
+    - [Instructions](#marking-instructions)
 - [Technical FAQs](#faqs-M1)
 
 ---
@@ -17,7 +19,6 @@ In M1, the robot will perform Simultaneous Localisation And Mapping (SLAM) in a 
 
 You will use your C1 (teleoperation) code to drive your robot around this unknown supermarket strategically, so that it can estimate where things are (creating a map of the arena with marker coordinates) and where itself is at any given time using its camera and motion model.
 
-Additionally, make sure you **do not fork the public repository** as forked repositories are always public and will cause **academic integrity issues**.
 
 ### ArUco markers
 [ArUco markers](http://www.uco.es/investiga/grupos/ava/node/26) are square fiducial markers introduced by Rafael Muñoz and Sergio Garrido. OpenCV contains a trained [function](https://docs.opencv.org/trunk/d5/dae/tutorial_aruco_detection.html) that detects the ArUco markers, which will be used in this project (the dictionary we used to generate the markers was ```cv2.aruco.DICT_4X4_100```). PenguinPi will be using these ArUco markers as aisle labels to help it map the environment and locate itself. 
@@ -54,12 +55,6 @@ Complete [wheel_calibration.py](calibration/wheel_calibration.py) by completing 
 
 You can mark a 1m long straight line with masking tape on the floor, and use it as a guide to check if the robot has travelled exactly (as close as possible) 1m. Masking tape and measuring tape will be provided to you in the lab.
 
-[New] Please make sure to pull the latest changes of the calibration files. We had mistakenly not updated the default IP address to refer to the robot's network IP address. If you would prefer to directly edit the file yourself, you can change lines 99-100 (or similar looking lines if you have made changes to the file) to the following:
-
-
-- ```parser.add_argument("--ip", metavar='', type=str, default='192.168.50.1')```
-- ```parser.add_argument("--port", metavar='', type=int, default=8080)```
-
 #### Step 3) Camera calibration
 Complete [calib_pic.py](calibration/calib_pic.py) using your C1 teleoperation codes and run the completed script using ```python3 calib_pic.py```, then press ENTER to take a calibration photo (It will be saved as [calib_0.png](calibration/images/calib_0.png)) in your [Images folder](calibration/images/). You should place the robot fairly close to the calibration rig to get a good view of the 8 dots. The photo should look something like this:
 
@@ -67,11 +62,11 @@ Complete [calib_pic.py](calibration/calib_pic.py) using your C1 teleoperation co
 
 Once you have taken the `calib_0.png` photo with the robot, run ```python3 camera_calibration.py``` to perform camera calibration. This opens the calibration photo you just took. Selecting the 8 key points in the calibration photo following the ordering shown in [calibration-fixture.png](diy_prints/calibration-fixture.png) by left clicking on each point (right click to cancel a selected point). Once all 8 points are selected, close the figure window to compute the camera matrix. This will update the [intrinsic parameters](calibration/param/intrinsic.txt). Note: keep the [distortion coefficients](calibration/param/distCoeffs.txt) to all 0s.
 
+**NOTE:** You may encounter an issue such as "Illegal Instruction" or some other issue, when running the `camera_calibration.py` script. If this happens, try running `camera_calibration_2.py` instead, which is an alternative script that uses OpenCV instead of machinevisiontoolbox.
+
 ![Calibration fixture](diy_prints/calibration-fixture.png?raw=true "Calibration fixture")
 
 **Note:** You can make your own calibration rig for development outside of the labs using [the print file provided](diy_prints/LabPrintingRig_A3.pdf) (notice the small square in the top left corner in addition to the dots). The size of the rig is specified in [calibration-fixture.png](diy_prints/calibration-fixture.png). Please print the pdf using **A3-size papers** and beware of printing rescaling. Make sure that the panels are at 90deg to each other and the distance between the calibration dots are as specified when making the rig, as this will influence the accuracy of your estimations. We will bring a calibration rig to the labs for you to perform the calibration during the lab sessions too.
-
-[New] - If you are on Windows, or otherwise do not have the machinevisiontoolbox, run the ```camera_calibration_2.py``` script instead. 
 
 ---
 ### SLAM
@@ -98,7 +93,9 @@ Run ```python3 SLAM_eval.py TrueMap.txt lab_output/slam.txt``` and you should se
 
 ---
 ## M1 Marking
-Please see [M1 marking instructions](M1_marking_instructions.md)
+### Evaluation Scheme and Marking Instructions
+
+This will be updated during the semester. 
 
 ---
 ## FAQs: M1
@@ -112,13 +109,3 @@ Please see [M1 marking instructions](M1_marking_instructions.md)
 - The state vector x will be appended with the ArUco marker measurements. Take a note of the location of x that should be updated in the motion model.
 - In the prediction step, we should update the mean belief by driving the robot.
 - The example baseline, intrinsic and scale parameters on Github should be relatively close to your own parameters, though running your robot with those parameters may result in suboptimal SLAM performance. If you calibrate your robot and get vastly different values, consider double checking your calibration scripts to make sure no miscalculations are made.
-
----
-## M2
-From next milestone onwards, we will be using plastic fruits and vegetables. If you wish to prepare your group by purchasing the fruits and veg we are going to be using, you can do so at these links:
-
-- https://amzn.asia/d/4a1usfd
-- https://amzn.asia/d/jdDttg4
-
-The items take a few weeks to come through. Note - this is NOT an endorsement for the vendor and we are not affiliated with the supplier
-

@@ -42,15 +42,12 @@ def calibrateWheelRadius():
     # Once finished driving, compute the scale parameter by averaging
     num = len(wheel_velocities_range)
     scale = 0
-    scales = []
     for delta_time, wheel_vel in zip(delta_times, wheel_velocities_range):
-        # TODO: replace with your code to compute the scale parameter using wheel_vel and delta_time
-        scale = 1 / (wheel_vel * delta_time)
-        scales.append(scale)
-    average_scale = sum(scales) / num
-    print("The scale parameter is estimated as {:.6f} m/ticks.".format(average_scale))
+        scale += 1 / (wheel_vel * delta_time)
+        pass # TODO: replace with your code to compute the scale parameter using wheel_vel and delta_time
+    print("The scale parameter is estimated as {:.6f} m/ticks.".format(scale))
 
-    return average_scale
+    return scale/num
 
 
 def calibrateBaseline(scale):
@@ -89,15 +86,12 @@ def calibrateBaseline(scale):
     # Once finished driving, compute the basline parameter by averaging
     num = len(wheel_velocities_range)
     baseline = 0
-    baselines = []
     for delta_time, wheel_vel in zip(delta_times, wheel_velocities_range):
-        # TODO: replace with your code to compute the baseline parameter using scale, wheel_vel, and delta_time
-        baseline = (wheel_vel * delta_time * scale) / np.pi
-        baselines.append(baseline)
-    average_baseline = sum(baselines) / num
-    print("The baseline parameter is estimated as {:.6f} m.".format(average_baseline))
+        baseline+= (wheel_vel * delta_time * scale) / np.pi
+        pass # TODO: replace with your code to compute the baseline parameter using scale, wheel_vel, and delta_time
+    print("The baseline parameter is estimated as {:.6f} m.".format(baseline/num))
 
-    return average_baseline
+    return baseline/num
 
 
 if __name__ == "__main__":
