@@ -86,11 +86,17 @@ class EKF:
 
     # the prediction step of EKF
     def predict(self, raw_drive_meas):
+        # TODO: add your codes here to complete the prediction step
+                
+        # Update the robots state with its motion model
+        self.robot.state = self.robot.drive(raw_drive_meas)
 
         F = self.state_transition(raw_drive_meas)
+        Q = self.predict_covariance(raw_drive_meas) 
+         
         x = self.get_state_vector()
-
-        # TODO: add your codes here to complete the prediction step
+        
+        self.P = F @ self.P @ F.T + Q
 
     # the update step of EKF
     def update(self, measurements):
@@ -115,7 +121,21 @@ class EKF:
         x = self.get_state_vector()
 
         # TODO: add your codes here to compute the updated x
+         # Innovation
+        y = z - z_hat
 
+        # Kalman gain
+        S = H @ self.P @ H.T + R
+        K = self.P @ H.T @ np.linalg.inv(S)
+
+        # Update state
+        x = self.get_state_vector()
+        x = x + K @ y
+        self.set_state_vector(x)
+
+        # Update covariance
+        I = np.eye(self.P.shape[0])
+        self.P = (I - K @ H) @ self.P
 
     def state_transition(self, raw_drive_meas):
         n = self.number_landmarks()*2 + 3
