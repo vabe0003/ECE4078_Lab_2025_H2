@@ -77,48 +77,9 @@ class Robot:
         th = self.state[2]
         
         # TODO: add your codes here to compute DFx using lin_vel, ang_vel, dt, and th
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-
-        if ang_vel == 0:
-            return np.array([
-                # ∂x'/∂x  ∂x'/∂y  ∂x'/∂θ 
-                [ 1,      0,      lin_vel * -math.sin(th) * dt ],
-                # ∂y'/∂x  ∂y'/∂y  ∂y'/∂θ
-                [ 0,      1,      lin_vel *  math.cos(th) * dt ],
-                # ∂θ'/∂x  ∂θ'/∂y  ∂θ'/∂θ
-                [ 0,      0,      1                         ],
-            ])
-        else:
-            R = lin_vel / ang_vel
-            dth = ang_vel * dt
-            return np.array([
-                # ∂x'/∂x  ∂x'/∂y  ∂x'/∂θ 
-                [ 1,      0,      R * (-math.cos(th) + math.cos(th + dth))  ],
-                # ∂y'/∂x  ∂y'/∂y  ∂y'/∂θ
-                [ 0,      1,      R * (-math.sin(th) + math.sin(th + dth)) ],
-                # ∂θ'/∂x  ∂θ'/∂y  ∂θ'/∂θ
-                [ 0,      0,      1                                    ],
-            ])
-        
-        
-=======
         DFx[0, 2] = -np.sin(th + dt * ang_vel)*dt * lin_vel
         DFx[1, 2] =  np.cos(th + dt * ang_vel)*dt * lin_vel
 
->>>>>>> Stashed changes
-=======
-        DFx[0, 2] = -np.sin(th + dt * ang_vel)*dt * lin_vel
-        DFx[1, 2] =  np.cos(th + dt * ang_vel)*dt * lin_vel
-
->>>>>>> Stashed changes
-=======
-        DFx[0, 2] = -np.sin(th + dt * ang_vel)*dt * lin_vel
-        DFx[1, 2] =  np.cos(th + dt * ang_vel)*dt * lin_vel
-
->>>>>>> Stashed changes
         return DFx
 
     def derivative_measure(self, markers, idx_list):
