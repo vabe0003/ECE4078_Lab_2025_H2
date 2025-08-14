@@ -79,6 +79,7 @@ class Robot:
         # TODO: add your codes here to compute DFx using lin_vel, ang_vel, dt, and th
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
         if ang_vel == 0:
@@ -103,6 +104,11 @@ class Robot:
             ])
         
         
+=======
+        DFx[0, 2] = -np.sin(th + dt * ang_vel)*dt * lin_vel
+        DFx[1, 2] =  np.cos(th + dt * ang_vel)*dt * lin_vel
+
+>>>>>>> Stashed changes
 =======
         DFx[0, 2] = -np.sin(th + dt * ang_vel)*dt * lin_vel
         DFx[1, 2] =  np.cos(th + dt * ang_vel)*dt * lin_vel
