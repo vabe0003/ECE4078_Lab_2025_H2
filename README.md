@@ -36,6 +36,6 @@ We are currently working with Woodside staff to organise arena space. This will 
 
 ## Help desks
 
-Help desks runs after the workshops on Mondays, 12pm-2pm, 16 Alliance, Room 224. 
+Help desks runs after the workshops on Mondays, 2pm-4pm, 16 Alliance, Room 224. 
 
 
