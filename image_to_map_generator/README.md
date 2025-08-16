@@ -13,8 +13,6 @@ you are caught using this code to generate your ground truth maps for during any
 ### Python version
 This code has only been validated in later versions of python (3.9/10) onwards, so it will likely not work on the Ubuntu 18.04 which uses Python 3.6.9.
 
-- **[New] We can confirm it does not currently work for versions greater than 3.10 or less than 3.7.**
-
 ## Python Package Version differences
 There are potentially package version clashes between the PenguinPi robot code and this Image-to-Map Generator, as a result we recommend you install the packages for this code in a separate python virtual environment.
 
@@ -32,11 +30,16 @@ Depending on which installation of python you have installed on your system. You
 ```bash
 map_generator\Scripts\activate
 ```
-(On Mac or Linux)
-```bash
-source ./map_generator/bin/activate
-```
+
 From here you will install dependencies below.
+
+### Installation on MacOS
+
+To get this running on MacOS, it is assumed you have set up a virtual environment with Anaconda Navigator and installed the `requirements.txt` **in the Installation folder**, instructed in [this Installation README](../Installation/EnvironmentSetup.md). 
+
+If you installed the lab dependencies with OrbStack on your Mac, please follow the instructions to set up a virtual environment with Anaconda Navigator.
+
+You just need to run `pip install pyqt5==5.15.11` within your virtual environment, and your environment should be set up and ready to use the image to map generator script.
 
 ### Install dependencies
 All the dependencies are specified in [requirements.txt](requirements.txt). You may use this command to install the required dependencies:
@@ -63,16 +66,6 @@ Change the parameters in [config.yaml](config.yaml) before running the code.
 | arena_size        | Size of the arena in [m]. Change this if you are using your own custom arena                                                                                          |
 
 It is recommended to keep the default values for the remaining parameters in the yaml file. However, you may change them if you wish to do so.
-
-- **[NEW] we however you do change the arena size value. Please ask TAs for this value. If this value is updated we will announce this**
-
-### Reference map
-
-You may use the [reference_map_generator.py](reference_map_generator.py) to generate a reference map for your custom arena.
-
-```bash
-python3 reference_map_generator.py
-```
 
 ### Run the code
 Use this command to run the code:
