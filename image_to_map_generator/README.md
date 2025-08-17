@@ -11,10 +11,22 @@ you are caught using this code to generate your ground truth maps for during any
 
 ## Usage
 ### Python version
-This code has only been validated in later versions of python (3.9/10) onwards, so it will likely not work on the Ubuntu 18.04 which uses Python 3.6.9.
+This code has only been validated in later versions of python (3.9/10) onwards.
 
-## Python Package Version differences
-There are potentially package version clashes between the PenguinPi robot code and this Image-to-Map Generator, as a result we recommend you install the packages for this code in a separate python virtual environment.
+- [New] We can confirm it does not currently work for versions greater than 3.10 or less than 3.7.
+
+## [New] Installation Instructions
+
+This section was initially written to install the relevant packages for Apple Silicon Macs but has been found to work on Windows devices, this has not been verified on Linux but should work (and will be verified later). If you have concerns about this working, or have issues with the installation, skip this section and attempt the Alternate Installation Instructions. 
+
+To get this running, it is assumed you have set up a virtual environment with Anaconda Navigator and installed the `requirements.txt` **in the Installation folder**, instructed in [this Installation README](../Installation/EnvironmentSetup.md). 
+
+If you installed the lab dependencies with OrbStack on your Mac, please follow the instructions to set up a virtual environment with Anaconda Navigator.
+
+You just need to run `pip install pyqt5==5.15.11` within your virtual environment, and your environment should be set up and ready to use the image to map generator script. Please note that this has only been verified on an M1 Mac and Windows device.
+
+## Alternate Installation Instruction - Python Package Version Differences
+There are potentially package version clashes between the PenguinPi robot code and this Image-to-Map Generator, as a result we recommend you install the packages for this code in a separate python virtual environment if you come into issues. Note that if you have any issues with the prior method, you may also need to recreate the conda environment for the Lab in the [Installation](../Installation/EnvironmentSetup.md) folder.
 
 This can be done with:
 ```bash
@@ -33,14 +45,6 @@ map_generator\Scripts\activate
 
 From here you will install dependencies below.
 
-### Installation on MacOS
-
-To get this running on MacOS, it is assumed you have set up a virtual environment with Anaconda Navigator and installed the `requirements.txt` **in the Installation folder**, instructed in [this Installation README](../Installation/EnvironmentSetup.md). 
-
-If you installed the lab dependencies with OrbStack on your Mac, please follow the instructions to set up a virtual environment with Anaconda Navigator.
-
-You just need to run `pip install pyqt5==5.15.11` within your virtual environment, and your environment should be set up and ready to use the image to map generator script.
-
 ### Install dependencies
 All the dependencies are specified in [requirements.txt](requirements.txt). You may use this command to install the required dependencies:
 ```bash
@@ -51,6 +55,8 @@ or
 python3 -m pip install -r requirements.txt
 ```
 Depending on which installation of python you have installed on your system.
+
+- [New] You can try the method below (for Apple Silicon Macs) and install PyQT5 directly into your ECE4078_Lab conda environment
 
 ### Configure the parameters
 Change the parameters in [config.yaml](config.yaml) before running the code.
@@ -67,8 +73,16 @@ Change the parameters in [config.yaml](config.yaml) before running the code.
 
 It is recommended to keep the default values for the remaining parameters in the yaml file. However, you may change them if you wish to do so.
 
+- [New] The default size for the arena is now 2.4m x 2.4m. Note that this is not wholly accurate to the actual dimensions of the arenas which will be carefully measured during marking weeks, although the error is less 1% so should give a good idea of your current mapping accuracy. We have changed the initial reference map to account for the reduced arena size.
+- [New] The image display resolution has been decreased to fit on most screens
+
 ### Run the code
 Use this command to run the code:
+
+```bash
+python gt_map_generator.py
+```
+or
 ```bash
 python3 gt_map_generator.py
 ```

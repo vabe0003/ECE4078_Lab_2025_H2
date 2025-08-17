@@ -22,15 +22,15 @@ fruits: # BGR
 
 # change this if the GUI is too big for your screen
 image_display_res:
-  x: 700
-  y: 450
+  x: 600
+  y: 390
 
 # increase this if it is difficult to click on the objects
 max_click_radius: 25  # unit: [pixels]
 
 arena_size: # unit: [m]
-  x: 3.0
-  y: 3.0
+  x: 2.4
+  y: 2.4
 
 # ===============================================
 # less important params (recommend not to change)

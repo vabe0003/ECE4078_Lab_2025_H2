@@ -83,6 +83,8 @@ Once you have taken the `calib_0.png` photo with the robot, run ```python3 camer
 
 Once robot.py and ekf.py are completed, you can test the performance of your SLAM by running ```python3 operate.py```
 
+- [New] Please make sure you update the robot's position in the ```Predict()``` function using ```self.robot.drive(raw_drive_meas)``` and the state of the robot and markers in the ```Update()``` function with ```self.set_state_vector(x)``` after updating the values. (Note that these have now been included in the skeleton code as well for reference)
+
 Below are examples of what the GUI running SLAM looks like on physical robot and in sim:
 
 ![Example SLAM visualisation on physical robot](screenshots/SLAMvis.png?raw=true "Example SLAM visualization in Gazebo")
