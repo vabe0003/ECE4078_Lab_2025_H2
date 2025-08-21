@@ -64,6 +64,8 @@ def test_derivative_drive():
     for i, drive_meas in enumerate(test_drive_measurement):
         DFx = robot.derivative_drive(drive_meas)
         assert np.all(np.isclose(DFx, expected_data["DFx"][i])), "wrong implementation of derivative_drive"
+        print("DFx got:\n", DFx)
+        print("DFx expected:\n", expected_data["DFx"][i])
 
 def test_covariance_drive():
     operate = Operate(args)
