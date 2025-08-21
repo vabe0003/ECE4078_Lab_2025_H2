@@ -20,7 +20,7 @@ Credit Tin Tran
 
     [NOTE] It is important that you keep everything else in the skeleton codes the same!
 
-3. Replace your baseline and scale with the provided [baseline.txt](./baseline.txt) and [scale.txt](./scale.txt).
+3. Replace your baseline and scale with the provided [baseline.txt](./baseline.txt) and [scale.txt](./scale.txt). Replace the intrinsic and dist coefficients with the provided [intrinsic.txt](./intrinsic.txt) and [distCoeffs.txt](./distCoeffs.txt) 
 
 4. Activate your virtual environment.
 
