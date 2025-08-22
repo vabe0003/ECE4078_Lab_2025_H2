@@ -3,7 +3,7 @@
 # ===============================================
 # Main params to modify
 # ===============================================
-input_image: example_input_image.jpg
+input_image: map_60.jpg
 output_map_name: test_output.txt
 
 # a reference map to specify the objects (how many for each type) on the map

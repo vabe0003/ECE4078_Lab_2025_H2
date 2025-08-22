@@ -77,9 +77,17 @@ class Robot:
         th = self.state[2]
         
         # TODO: add your codes here to compute DFx using lin_vel, ang_vel, dt, and th
-        DFx[0, 2] = -np.sin(th + dt * ang_vel)*dt * lin_vel
-        DFx[1, 2] =  np.cos(th + dt * ang_vel)*dt * lin_vel
-
+        v  = float(lin_vel)
+        w  = float(ang_vel)
+        dt = float(drive_meas.dt)
+        th = float(self.state[2])
+        if abs(w) < 1e-9:
+    # ω -> 0 极限（直线）
+            DFx[0, 2] = -v * dt * np.sin(th)
+            DFx[1, 2] =  v * dt * np.cos(th)
+        else:
+            DFx[0, 2] = -np.sin(th + dt * ang_vel)*dt * lin_vel
+            DFx[1, 2] =  np.cos(th + dt * ang_vel)*dt * lin_vel
         return DFx
 
     def derivative_measure(self, markers, idx_list):
@@ -127,11 +135,21 @@ class Robot:
         Jac2 = np.zeros((3,2))
         
         # TODO: add your codes here to compute Jac2 using lin_vel, ang_vel, dt, th, and th2
-        Jac2[0, 0] = dt * np.cos(th2)
-        Jac2[0, 1] = -lin_vel * (dt**2) * np.sin(th2)
-        Jac2[1, 0] = dt * np.sin(th2)
-        Jac2[1, 1] =  lin_vel * (dt**2) * np.cos(th2)
-        Jac2[2, 0] = 0
+        v  = float(lin_vel)
+        w  = float(ang_vel)
+        dt = float(drive_meas.dt)
+        th = float(self.state[2])
+
+
+        Jac2 = np.zeros((3, 2))
+        if abs(w) < 1e-9:
+    # ω -> 0 极限
+            Jac2[0, 0] = dt * np.cos(th)
+            Jac2[1, 0] = dt * np.sin(th)
+        else:
+            Jac2[0, 0] = dt * np.cos(th)
+            Jac2[1, 0] = dt * np.sin(th)
+        Jac2[2, 0] = 0.0
         Jac2[2, 1] = dt
         # Derivative of x,y,theta w.r.t. left_speed, right_speed
         Jac = Jac2 @ Jac1

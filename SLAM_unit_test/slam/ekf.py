@@ -169,23 +169,17 @@ class EKF:
     # ===================== EKF CORE =====================
 
     def predict(self, raw_drive_meas):
-        F = self.state_transition(raw_drive_meas)
+        F = self.state_transition(raw_drive_meas)     # uses pre-motion θ
+        Q = self.predict_covariance(raw_drive_meas)   # <-- compute with pre-motion θ
 
-        # Advance robot kinematics
-        self.robot.drive(raw_drive_meas)
+        self.robot.drive(raw_drive_meas)              # advance state
 
-        # ---- PREDICTION: tune via predict_covariance() & Q_STAB ----
-        Q = self.predict_covariance(raw_drive_meas)
-        # TIP:
-        #  - If odom is too "stiff"/slow to correct -> increase Q_STAB (0.03–0.05)
-        #  - If map becomes noisy -> decrease Q_STAB (0.01)
         self.P = F @ self.P @ F.T + Q
 
-        # keep heading bounded
         x = self.get_state_vector()
         x[2,0] = self._wrap_angle(x[2,0])
         self.set_state_vector(x)
-
+        
     def update(self, measurements):
         if not measurements:
             return
