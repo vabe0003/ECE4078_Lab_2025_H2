@@ -1,6 +1,8 @@
 # ECE4078_Lab_2025
 This repo is for ECE4078 (Intelligent Robotics) labs for 2025. There is a quick lab overview video available [here](https://drive.google.com/file/d/1PT0DUQz8tL-ve9bB-mJOfK4l_KZ_MImg/view?usp=sharing). 
 
+Marking schedule for the demonstrations can be found [here](https://docs.google.com/spreadsheets/d/1X3cr0gBKZy2VaotczIgovOc5Q4cgQa3NROwMl_u-cKw/edit?gid=0#gid=0)
+
 ## Labs
 
 For each milestone, you and your group will have to submit your implementation on Moodle before the marking lab session, and perform a live demonstration during the marking lab session. All lab sessions are located at 16 Alliance, room 224. Labs for ECE4078/5178 runs on:
