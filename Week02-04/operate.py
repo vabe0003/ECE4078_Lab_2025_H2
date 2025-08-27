@@ -256,6 +256,8 @@ class Operate:
                 self.quit = True
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.quit = True
+            elif event.type == pygame.KEYUP:
+                self.command['motion'] = [0, 0]
         if self.quit:
             pygame.quit()
             sys.exit()
