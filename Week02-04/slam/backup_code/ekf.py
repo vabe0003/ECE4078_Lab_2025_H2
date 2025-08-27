@@ -22,9 +22,9 @@ class EKF:
     """
 
     # ===================== TUNABLES (edit here) =====================
-    BASE_MEAS_STD_M = 0.02     # base per-axis std for R (m)
+    BASE_MEAS_STD_M = 0.03     # base per-axis std for R (m)
     GATE_CHI2       = 5.991    # 95% chi^2 in 2D
-    RANGE_INFLATE   = 3.45     # distance-based inflation strength (soft)
+    RANGE_INFLATE   = 0.8      # distance-based inflation strength (soft)
     Q_STAB          = 0.02     # process noise stabilizer on pose
     INIT_LM_STD_M   = 0.40     # fixed LM init std if not smart init
     USE_SMART_LM_INIT   = True
@@ -150,7 +150,7 @@ class EKF:
 
         # soft distance inflation
         r = float(np.linalg.norm(z_i))
-        scale_r   = 1.0 + self.RANGE_INFLATE * (min(r, 2.0)/0.5)**2
+        scale_r   = 1.0 + self.RANGE_INFLATE * (min(r, 2.0)/1.0)**2
 
         # residual-dependent inflation
         scale_res = 1.0 if d2 is None else min(3.0, 0.5 + d2/self.GATE_CHI2)

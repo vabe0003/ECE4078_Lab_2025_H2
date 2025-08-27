@@ -20,26 +20,25 @@ class EKF:
     * MAX_RANGE_M: hard range gate. FAR_REJECT=True → drop far points.
     ───────────────────────────────────────────────────────────────────
     """
-
     # ===================== TUNABLES (edit here) =====================
-    BASE_MEAS_STD_M = 0.02     # base per-axis std for R (m)
-    GATE_CHI2       = 5.991    # 95% chi^2 in 2D
-    RANGE_INFLATE   = 3.45     # distance-based inflation strength (soft)
-    Q_STAB          = 0.02     # process noise stabilizer on pose
-    INIT_LM_STD_M   = 0.40     # fixed LM init std if not smart init
-    USE_SMART_LM_INIT   = True
+    BASE_MEAS_STD_M = 0.028   # ↓ a touch; tighten clean ArUco reads (was 0.03)
+    GATE_CHI2       = 4.5     # stricter gating (was 5.991); reject more outliers
+    RANGE_INFLATE   = 0.9     # slightly stronger distance-based inflation (was 0.8)
+    Q_STAB          = 0.02    # keep for now; anisotropic tweak is in predict_covariance()
+    INIT_LM_STD_M   = 0.40
+    USE_SMART_LM_INIT = True  # keep: initialize LM covariance from measurement
 
-    # --- New: Anchor landmark (first tag) ---
+    # --- Anchor landmark (first tag) ---
     ANCHOR_USE          = True
-    ANCHOR_LM_STD_M     = 0.01   # 2 cm init covariance for anchor landmark
-    ANCHOR_MEAS_STD_M   = 0.015  # 1.5 cm measurement std for anchor observations
+    ANCHOR_LM_STD_M     = 0.010   # very confident anchor (1 cm std)
+    ANCHOR_MEAS_STD_M   = 0.012   # and trust its measurements more (1.2 cm)
 
-    # --- New: Range management ---
-    MAX_RANGE_M     = 1.6     # hard range gate (meters)
-    FAR_REJECT      = True    # if True, drop measurements beyond MAX_RANGE_M
-    FAR_R_MULT      = 3.0     # if FAR_REJECT=False, multiply R by this for far points
+    # --- Range management ---
+    MAX_RANGE_M     = 1.30   # drop far, corner sightings (was 1.6)
+    FAR_REJECT      = True   # reject beyond MAX_RANGE_M
+    FAR_R_MULT      = 3.0    # only used if FAR_REJECT=False
 
-    # Optional evaluation alignment (leave False unless you want to bake in GT)
+    # Optional evaluation alignment (leave False unless you really need it)
     OPTIONAL_ALIGNMENT = False
     ALIGN_ROT_RAD   = -1.7354400353556125
     ALIGN_TX        = 0.2689604391944955
@@ -123,14 +122,25 @@ class EKF:
 
     # ===================== EKF CORE =====================
 
-    def predict(self, raw_drive_meas):
-        F = self.state_transition(raw_drive_meas)
-        self.robot.drive(raw_drive_meas)
-        Q = self.predict_covariance(raw_drive_meas)
-        self.P = F @ self.P @ F.T + Q
-        x = self.get_state_vector()
-        x[2,0] = self._wrap_angle(x[2,0])
-        self.set_state_vector(x)
+    def predict_covariance(self, raw_drive_meas):
+        n = self.number_landmarks()*2 + 3
+        Q = np.zeros((n,n))
+
+        # Start from wheel -> pose covariance
+        Q_odom = self.robot.covariance_drive(raw_drive_meas)
+
+        # Anisotropic stabilizer: allow more x/y drift than heading
+        qx_extra  = 0.025   # ↑ if odom seems over-confident in position
+        qy_extra  = 0.025
+        qth_extra = 0.006   # keep heading tighter
+
+        Q_odom[0,0] += qx_extra
+        Q_odom[1,1] += qy_extra
+        Q_odom[2,2] += qth_extra
+
+        Q[0:3,0:3] = Q_odom
+        return Q
+
 
     def _adaptive_R(self, z_i, d2=None, is_anchor=False, is_far=False):
         """
@@ -150,7 +160,7 @@ class EKF:
 
         # soft distance inflation
         r = float(np.linalg.norm(z_i))
-        scale_r   = 1.0 + self.RANGE_INFLATE * (min(r, 2.0)/0.5)**2
+        scale_r   = 1.0 + self.RANGE_INFLATE * (min(r, 2.0)/1.0)**2
 
         # residual-dependent inflation
         scale_res = 1.0 if d2 is None else min(3.0, 0.5 + d2/self.GATE_CHI2)
