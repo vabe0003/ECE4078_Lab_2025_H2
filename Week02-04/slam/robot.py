@@ -82,12 +82,17 @@ class Robot:
         w  = float(ang_vel)
         dt = float(drive_meas.dt)
         th = float(self.state[2])
-        if abs(w) < 1e-9:
+        th2  = th + w*dt
+
+        eps = 1e-9
+        if abs(w) < eps:
+        # straight-line limit
             DFx[0, 2] = -v * dt * np.sin(th)
             DFx[1, 2] =  v * dt * np.cos(th)
         else:
-            DFx[0, 2] = -np.sin(th + dt * ang_vel)*dt * lin_vel
-            DFx[1, 2] =  np.cos(th + dt * ang_vel)*dt * lin_vel
+
+            DFx[0, 2] = (v / w) * (np.cos(th2) - np.cos(th))
+            DFx[1, 2] =        (v / w) * (np.sin(th2) - np.sin(th))
         return DFx
 
     def derivative_measure(self, markers, idx_list):
@@ -122,37 +127,50 @@ class Robot:
         return DH
     
     def covariance_drive(self, drive_meas):
-        Jac1 = np.array([
-            [ self.wheels_scale/2.0,               self.wheels_scale/2.0],
-            [-self.wheels_scale/self.wheels_width, self.wheels_scale/self.wheels_width]
-        ])
+        # Derivative of lin_vel, ang_vel w.r.t. left_speed, right_speed
+        Jac1 = np.array([[self.wheels_scale/2, self.wheels_scale/2],
+                [-self.wheels_scale/self.wheels_width, self.wheels_scale/self.wheels_width]])
+        
+        lin_vel, ang_vel = self.convert_wheel_speeds(drive_meas.left_speed, drive_meas.right_speed)
+        th = self.state[2]
+        dt = drive_meas.dt
+        th2 = th + dt*ang_vel
 
-        v, w = self.convert_wheel_speeds(drive_meas.left_speed, drive_meas.right_speed)
-        v, w = float(v), float(w)
-        dt   = float(drive_meas.dt)
-        th   = float(self.state[2])
-        eps  = 1e-6
-
+        # Derivative of x,y,theta w.r.t. lin_vel, ang_vel
         Jac2 = np.zeros((3,2))
-        if abs(w) < eps:
-            # ω → 0 limit
-            Jac2[0,0] = dt*np.cos(th)
-            Jac2[1,0] = dt*np.sin(th)
-            Jac2[0,1] = -0.5*v*dt*dt*np.sin(th)
-            Jac2[1,1] =  0.5*v*dt*dt*np.cos(th)
-        else:
-            th2 = th + w*dt
-            s1  = np.sin(th2) - np.sin(th)
-            c1  = np.cos(th2) - np.cos(th)
-            # ∂/∂v
-            Jac2[0,0] =  s1 / w
-            Jac2[1,0] = -c1 / w
-            # ∂/∂ω
-            Jac2[0,1] = v*( w*dt*np.cos(th2) - s1 ) / (w*w)
-            Jac2[1,1] = v*( w*dt*np.sin(th2) + c1 ) / (w*w)
-        Jac2[2,0] = 0.0
-        Jac2[2,1] = dt
+        
+        # TODO: add your codes here to compute Jac2 using lin_vel, ang_vel, dt, th, and th2
+        v  = float(lin_vel)
+        w  = float(ang_vel)
+        dt = float(drive_meas.dt)
+        th = float(self.state[2])
+        th2 = th + dt*ang_vel
 
+
+     # ∂[x, y, θ]/∂[v, w]
+        Jac2 = np.zeros((3, 2))
+        eps = 1e-9
+        if abs(w) < eps:
+            Jac2[0, 0] = dt * np.cos(th)                 # ∂x/∂v
+            Jac2[1, 0] = dt * np.sin(th)                 # ∂y/∂v
+            Jac2[0, 1] = 0  # ∂x/∂ω
+            Jac2[1, 1] =  0   # ∂y/∂ω
+            Jac2[2, 1] = 0                               # ∂θ/∂ω
+        else:
+            s1 = np.sin(th2) - np.sin(th)
+            c1 = np.cos(th2) - np.cos(th)
+            Jac2[0, 0] =  s1 / w                                              # ∂x/∂v
+            Jac2[1, 0] = -c1 / w                                              # ∂y/∂v
+            Jac2[0, 1] = v * ((dt * np.cos(th2)) / w - s1 / (w**2))           # ∂x/∂ω
+            Jac2[1, 1] = v * ((dt * np.sin(th2)) / w + c1 / (w**2))           # ∂y/∂ω
+            Jac2[2, 1] = dt                                                   # ∂θ/∂ω
+
+        Jac2[2, 0] = 0.0   # ∂θ/∂v = 0
+        # Derivative of x,y,theta w.r.t. left_speed, right_speed
         Jac = Jac2 @ Jac1
-        cov_wheels = np.diag((drive_meas.left_cov, drive_meas.right_cov))
-        return Jac @ cov_wheels @ Jac.T
+
+        # Compute covariance
+        cov = np.diag((drive_meas.left_cov, drive_meas.right_cov))
+        cov = Jac @ cov @ Jac.T
+        
+        return cov
