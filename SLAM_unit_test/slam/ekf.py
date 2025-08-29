@@ -57,7 +57,7 @@ class EKF:
     GATE_CHI2       = 5.991   # 95% chi^2 in 2D. Raise to 7.378 (97.5%) if dropping too much.
     RANGE_INFLATE   = 0.8     # how fast R grows with distance (0.5–1.2 typical)
     RESIDUAL_CAP    = 3.0     # maximum extra inflation based on residual size (2.0–3.5)
-    Q_STAB          = 0.02    # extra stabilizer on pose process noise (0.01–0.05)
+    Q_STAB          = 0.01    # extra stabilizer on pose process noise (0.01–0.05)
     INIT_LM_STD_M   = 0.40    # fixed landmark init std (used if not smart init)
     USE_SMART_LM_INIT = True  # True -> use rotated measurement covariance for new LM
     OPTIONAL_ALIGNMENT = False  # set True only if you want to align to an external GT
