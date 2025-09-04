@@ -88,8 +88,8 @@ class EKF:
     def predict(self, raw_drive_meas):
 
         F = self.state_transition(raw_drive_meas)
-        x = self.get_state_vector()
 
+        self.robot.drive(raw_drive_meas) # Updates robot's position based on driving data
         # TODO: add your codes here to complete the prediction step
         Q = self.predict_covariance(raw_drive_meas)
 
@@ -125,6 +125,9 @@ class EKF:
         I = np.eye(self.P.shape[0])
         self.P = (I - K @ H) @ self.P @ (I - K @ H).T + K @ R @ K.T
 
+
+        # ENDTODO
+        self.set_state_vector(x) # Updates marker and robot poses based on the values in the state vector 'x'
 
     def state_transition(self, raw_drive_meas):
         n = self.number_landmarks()*2 + 3

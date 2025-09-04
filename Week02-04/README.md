@@ -15,7 +15,7 @@
 ## Introduction
 Imagine your robot arrives at a new supermarket which has an unknown layout. It can read aisle labels with its camera and remembers how it has moved since it started at location (0,0,0) (x,y,theta). How can it figure out where things are and where itself is positioned at a given time?
 
-In M1, the robot will perform Simultaneous Localisation And Mapping (SLAM) in a small arena (supermarket), which contains 10 ArUco markers (aisle labels). The robot will always start at the centre of the map, i.e., (x,y,theta) = (0,0,0). 
+In M1, the robot will perform Simultaneous Localisation And Mapping (SLAM) in a small arena (supermarket), which contains 10 ArUco markers (aisle labels). The robot will always start at the centre of the map, i.e., (x,y,theta) = (0,0,0). In addition to the markers, we will be including physical barriers within the environment.
 
 You will use your C1 (teleoperation) code to drive your robot around this unknown supermarket strategically, so that it can estimate where things are (creating a map of the arena with marker coordinates) and where itself is at any given time using its camera and motion model.
 
@@ -77,6 +77,8 @@ Once you have taken the `calib_0.png` photo with the robot, run ```python3 camer
 **Please complete [robot.py](slam/robot.py) by filling in the computation of the [derivatives](slam/robot.py#L79) and [covariance](slam/robot.py#L127) of the motion model. Please also complete [ekf.py](slam/ekf.py) by filling in the computation of the [predicted robot state](slam/ekf.py#L93) and the [updated robot state](slam/ekf.py#L117) to finish the extended Kalman filter function.**
 
 Once robot.py and ekf.py are completed, you can test the performance of your SLAM by running ```python3 operate.py```
+
+- [New] Please make sure you update the robot's position in the ```Predict()``` function using ```self.robot.drive(raw_drive_meas)``` and the state of the robot and markers in the ```Update()``` function with ```self.set_state_vector(x)``` after updating the values. (Note that these have now been included in the skeleton code as well for reference)
 
 Below are examples of what the GUI running SLAM looks like on physical robot and in sim:
 

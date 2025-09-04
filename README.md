@@ -1,6 +1,8 @@
 # ECE4078_Lab_2025
 This repo is for ECE4078 (Intelligent Robotics) labs for 2025. There is a quick lab overview video available [here](https://drive.google.com/file/d/1PT0DUQz8tL-ve9bB-mJOfK4l_KZ_MImg/view?usp=sharing). 
 
+Marking schedule for the demonstrations can be found [here](https://docs.google.com/spreadsheets/d/1X3cr0gBKZy2VaotczIgovOc5Q4cgQa3NROwMl_u-cKw/edit?gid=0#gid=0)
+
 ## Labs
 
 For each milestone, you and your group will have to submit your implementation on Moodle before the marking lab session, and perform a live demonstration during the marking lab session. All lab sessions are located at 16 Alliance, room 224. Labs for ECE4078/5178 runs on:
@@ -12,7 +14,13 @@ For each milestone, you and your group will have to submit your implementation o
 
 ### Lab room 224, 16 Alliance
 
-You will not receive card access to room 224 outside of lab hours due to OH&S reasons. However, the teaching team might open up the labs during the busy weeks (ie. close to milestones/final demo) for you to use the space for testing your robots outside of classes during business hours. This will be communicated through the forums. We highly encourage you to get all the data you need during your allocated lab session, and to use the other existing arena spaces for testing. 
+Card access requirement for room 224 has been removed, so you can freely enter/exit the space between 8am to 8pm on weekdays. As a general reminder - lab space access will be revoked if there are any issues we find in the room (ie. you shouldn't be eating/drinking in the labs). Please clean up after yourselves, and to not damage the equipment in the lab room. Keyboard, mouse, and monitors needs to be plugged in especially if you are the last group leaving the room. 
+
+The room is available between 8am to 8pm. There are classes in room 224 at the following times:
+- Tuesdays: 9am - 3pm
+- Wednesdays: 9am - 6pm
+- Thursdays: 9am - 6pm
+- Friday: 1pm - 4pm (not ECE4078/5178) 
 
 ### Hargrave library
 
@@ -30,6 +38,6 @@ We are currently working with Woodside staff to organise arena space. This will 
 
 ## Help desks
 
-Help desks runs after the workshops on Mondays, 12pm-2pm, 16 Alliance, Room 224. 
+Help desks runs after the workshops on Mondays, 2pm-4pm, 16 Alliance, Room 224. 
 
 
