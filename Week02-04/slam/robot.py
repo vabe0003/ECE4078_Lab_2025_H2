@@ -65,7 +65,7 @@ class Robot:
     # Derivatives and Covariance
     # --------------------------
 
-    def derivative_drive(self, drive_meas):
+    def derivative_drive(self, drive_meas): #A jacobian matrix linearized around the current state
         # Compute the differential of drive w.r.t. the robot state
         DFx = np.zeros((3,3))
         DFx[0,0] = 1
@@ -86,11 +86,11 @@ class Robot:
             DFx[0, 2] = -v * dt * np.sin(th)
             DFx[1, 2] =  v * dt * np.cos(th)
         else:
-            DFx[0, 2] = -np.sin(th + dt * ang_vel)*dt * lin_vel
-            DFx[1, 2] =  np.cos(th + dt * ang_vel)*dt * lin_vel
+            DFx[0, 2] = (v/w)* (np.cos(th+w*dt) - np.cos(th))
+            DFx[1, 2] = (v/w)* (np.sin(th+w*dt) - np.sin(th))
         return DFx
 
-    def derivative_measure(self, markers, idx_list):
+    def derivative_measure(self, markers, idx_list):#C jacobian matrix linearized around the current measurement
         # Compute the derivative of the markers in the order given by idx_list w.r.t. robot and markers
         n = 2*len(idx_list)
         m = 3 + 2*markers.shape[1]

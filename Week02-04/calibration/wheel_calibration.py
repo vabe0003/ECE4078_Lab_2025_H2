@@ -11,11 +11,11 @@ def calibrateWheelRadius():
     # Compute the robot scale parameter using a range of wheel velocities.
     # For each wheel velocity, the robot scale parameter can be computed
     # by comparing the time and distance driven to the input wheel velocities.
-
+    #- The wheel radius is saved in “scale.txt”, 
     ##########################################
     # Feel free to change the range / step
     ##########################################
-    wheel_velocities_range = range(20, 80, 15)
+    wheel_velocities_range = range(20, 80, 15) #range(start, stop, step) 
     delta_times = []
 
     for wheel_vel in wheel_velocities_range:
