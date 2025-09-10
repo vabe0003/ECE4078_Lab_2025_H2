@@ -8,7 +8,7 @@ import os, sys
 import time
 
 # import utility functions
-#sys.path.insert(0, "{}/util".format(os.getcwd()))
+sys.path.insert(0, "{}/util".format(os.getcwd()))
 from util.pibot import PenguinPi # access the robot
 import util.DatasetHandler as dh # save/load functions
 import util.measure as measure # measurements

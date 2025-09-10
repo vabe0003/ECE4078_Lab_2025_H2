@@ -96,5 +96,3 @@ if __name__ == "__main__":
         canvas.blit(img_surface, (0, 0))
         pygame.display.update()
     print('Finished image collection.\n')
-
-

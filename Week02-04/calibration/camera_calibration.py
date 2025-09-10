@@ -1,76 +1,110 @@
-# for calculating the camera matrix from a photo of the calibration rig
+# Import required modules
+import cv2
 import numpy as np
 import os
-import sys
-import re
-import matplotlib
-import matplotlib.pyplot as plt
+import glob
 
-from machinevisiontoolbox import Image, CentralCamera
 
-if __name__ == '__main__':
-    
-    # Display image
-    img = Image.Read('./images/calib_0.png', grey=True)
-    image = Image(img)
-    fig = matplotlib.pyplot.figure()
-    plt.imshow(image.image, cmap='gray')
-    
-    # Variables, p will contains clicked points, idx contains current point that is being selected
-    p = np.ones((8,2)) * -1
-    idx = 0
+# Define the dimensions of checkerboard
+CHECKERBOARD = (7, 6)
 
-    
-    # pick points
-    def onclick(event):
-        global p, idx
-        
-        if event.button == 1:
-            # left mouse click, add point and increment by 1
-            p[idx, 0] = event.xdata
-            p[idx, 1] = event.ydata
-            idx = idx + 1
-        elif event.button == 3:
-            # right click, go back to previous point
-            idx -= 1
-            p[idx, 0] = -1
-            p[idx, 1] = -1
-            
-        idx = np.minimum(np.maximum(idx, 0), 7) # to keep within bounds
-        print(str(p.T))
-    
-    print("Specify points on the calibration rig following order")
-    fig.canvas.manager.set_window_title('Close image window once all 8 points are selected')    
-    ka = fig.canvas.mpl_connect('button_press_event', onclick)
-    plt.show()
-    
-    p = p.T
 
-    cm = 0.01 # centimetre to metre conversion factor
-    
-    P_calib = np.array([
-        [ 0,  -12.2, 12.2],
-        [ 0,   -6.2, 12.2],
-        [ 0,  -12.2,  6.2],
-        [ 0,   -6.2,  6.2],
-        [ 6.2,  0,   12.2],
-        [12.2,  0,   12.2],
-        [ 6.2,  0,    6.2],
-        [12.2,  0,    6.2]
-    ]).T * cm # calibration rig specs
-    
-    # compute the camera matrix
-    C, _ = CentralCamera.points2C(P_calib, p)
-    camera = CentralCamera.decomposeC(C)
-    
-    print("\nCamera info:\n", camera)
-    
-    # save the intrinsic parameters 
-    dataDir = "{}/param/".format(os.getcwd())
-    print("\nIntrinsic parameters:\n", camera.K)
-    fileNameI = "{}intrinsic.txt".format(dataDir)
-    np.savetxt(fileNameI, camera.K, delimiter=',')
-    
-    # extrinsic parameters
-    # print("\nExtrinsic parameters:\n", repr(camera.pose))
+# stop the iteration when specified
+# accuracy, epsilon, is reached or
+# specified number of iterations are completed.
+criteria = (cv2.TERM_CRITERIA_EPS + 
+            cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
+
+# Vector for 3D points
+threedpoints = []
+
+# Vector for 2D points
+twodpoints = []
+
+
+#  3D points real world coordinates
+objectp3d = np.zeros((1, CHECKERBOARD[0] 
+                      * CHECKERBOARD[1], 
+                      3), np.float32)
+objectp3d[0, :, :2] = np.mgrid[0:CHECKERBOARD[0],
+                               0:CHECKERBOARD[1]].T.reshape(-1, 2)
+prev_img_shape = None
+
+
+# Extracting path of individual image stored
+# in a given directory. Since no path is
+# specified, it will take current directory
+# jpg files alone
+currentDir = os.getcwd()
+dataDir = "{}/param/".format(currentDir)
+images = glob.glob(os.path.join(dataDir, "images", "calib_*.png"))
+
+for filename in images:
+    image = cv2.imread(filename)
+    grayColor = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Find the chess board corners
+    # If desired number of corners are
+    # found in the image then ret = true
+    ret, corners = cv2.findChessboardCorners(
+                    grayColor, CHECKERBOARD, 
+                    cv2.CALIB_CB_ADAPTIVE_THRESH 
+                    + cv2.CALIB_CB_FAST_CHECK + 
+                    cv2.CALIB_CB_NORMALIZE_IMAGE)
+
+    # If desired number of corners can be detected then,
+    # refine the pixel coordinates and display
+    # them on the images of checker board
+    if ret == True:
+        threedpoints.append(objectp3d)
+
+        # Refining pixel coordinates
+        # for given 2d points.
+        corners2 = cv2.cornerSubPix(
+            grayColor, corners, (11, 11), (-1, -1), criteria)
+
+        twodpoints.append(corners2)
+
+        # Draw and display the corners
+        image = cv2.drawChessboardCorners(image, 
+                                          CHECKERBOARD, 
+                                          corners2, ret)
+
+    cv2.imshow('img', image)
+    cv2.waitKey(0)
+
+cv2.destroyAllWindows()
+
+h, w = image.shape[:2]
+
+
+# Perform camera calibration by
+# passing the value of above found out 3D points (threedpoints)
+# and its corresponding pixel coordinates of the
+# detected corners (twodpoints)
+ret, matrix, distortion, r_vecs, t_vecs = cv2.calibrateCamera(
+    threedpoints, twodpoints, grayColor.shape[::-1], None, None)
+
+# Display results
+print(" Camera matrix:\n", matrix)
+print("\n Distortion coefficient:\n", distortion)
+
+# Save to files (like your other method)
+dataDir = "{}/param/".format(os.getcwd())
+os.makedirs(dataDir, exist_ok=True)
+
+fileNameI = "{}intrinsic.txt".format(dataDir)
+np.savetxt(fileNameI, matrix, delimiter=',')
+print(f"\nIntrinsic parameters saved to: {fileNameI}")
+
+fileNameD = "{}distCoeffs.txt".format(dataDir)
+np.savetxt(fileNameD, distortion, delimiter=',')
+print(f"Distortion coefficients saved to: {fileNameD}")
+
+# Optional: save extrinsics for the first calibration image
+R, _ = cv2.Rodrigues(r_vecs[0])
+T = t_vecs[0]
+extrinsicFile = "{}extrinsic.txt".format(dataDir)
+np.savetxt(extrinsicFile, np.hstack((R, T)), delimiter=',')
+print(f"Extrinsic parameters saved to: {extrinsicFile}")

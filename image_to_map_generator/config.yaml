@@ -3,8 +3,8 @@
 # ===============================================
 # Main params to modify
 # ===============================================
-input_image: example_input_image.jpg
-output_map_name: test_output.txt
+input_image: input_photo.jpeg
+output_map_name: TrueMap.txt
 
 # a reference map to specify the objects (how many for each type) on the map
 reference_map: example_reference_map.txt
@@ -22,8 +22,8 @@ fruits: # BGR
 
 # change this if the GUI is too big for your screen
 image_display_res:
-  x: 700
-  y: 450
+  x: 640
+  y: 320
 
 # increase this if it is difficult to click on the objects
 max_click_radius: 25  # unit: [pixels]
