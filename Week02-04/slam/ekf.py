@@ -124,7 +124,7 @@ class EKF:
 
     # ===================== EKF CORE =====================
 
-    def predict(self, raw_drive_meas):
+    def predict(self, raw_drive_meas): #prediction is also state of the model that include both robot and landmarks that will need to be corrected with the measurement
         F = self.state_transition(raw_drive_meas)
         self.robot.drive(raw_drive_meas)
         Q = self.predict_covariance(raw_drive_meas)
