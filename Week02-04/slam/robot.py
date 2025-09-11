@@ -82,12 +82,15 @@ class Robot:
         w  = float(ang_vel)
         dt = float(drive_meas.dt)
         th = float(self.state[2])
+        alpha = w*dt
         if abs(w) < 1e-9:
             DFx[0, 2] = -v * dt * np.sin(th)
             DFx[1, 2] =  v * dt * np.cos(th)
         else:
-            DFx[0, 2] = (v/w)* (np.cos(th+w*dt) - np.cos(th))
-            DFx[1, 2] = (v/w)* (np.sin(th+w*dt) - np.sin(th))
+            DFx[0, 2] = (v/w)* (np.cos(th+alpha) - np.cos(th))
+            DFx[1, 2] = (v/w)* (np.sin(th+alpha) - np.sin(th))
+
+        
         return DFx
 
     def derivative_measure(self, markers, idx_list):#C jacobian matrix linearized around the current measurement
@@ -140,9 +143,10 @@ class Robot:
             Jac2[1,0] = dt*np.sin(th)
             Jac2[0,1] = -0.5*v*dt*dt*np.sin(th)
             Jac2[1,1] =  0.5*v*dt*dt*np.cos(th)
+            Jac2[2, 1] = dt
         else:
-            th2 = th + w*dt
-            s1  = np.sin(th2) - np.sin(th)
+            th2 = th + w*dt # no tturn thenn w =0 
+            s1  = np.sin(th2) - np.sin(th) # from motion model
             c1  = np.cos(th2) - np.cos(th)
             # ∂/∂v
             Jac2[0,0] =  s1 / w
@@ -154,5 +158,25 @@ class Robot:
         Jac2[2,1] = dt
 
         Jac = Jac2 @ Jac1
-        cov_wheels = np.diag((drive_meas.left_cov, drive_meas.right_cov))
-        return Jac @ cov_wheels @ Jac.T
+        # --- Motion noise model in wheel space ---
+        left  = drive_meas.left_speed * dt   # displacement of left wheel
+        right = drive_meas.right_speed * dt  # displacement of right wheel
+        control_montion_factor = 0.06 #perfect bot all of this should be 0.0
+        control_turn_factor   = 0.12
+        rho = 0.25  # try 0.1–0.3 if wheels slip together
+        control_motion_factor = control_montion_factor * self.wheels_scale
+        left_var  = (control_motion_factor * left)**2 + \
+                (control_turn_factor   * (left - right))**2
+        right_var = (control_motion_factor * right)**2 + \
+                (control_turn_factor   * (left - right))**2
+
+        
+        cross_cov = rho * np.sqrt(left_var * right_var)
+
+        control_covariance = np.array([[left_var,  cross_cov],
+                                   [cross_cov, right_var]])
+        
+
+
+        cov = Jac @ control_covariance @ Jac.T
+        return cov

@@ -6,7 +6,7 @@ import glob
 
 
 # Define the dimensions of checkerboard
-CHECKERBOARD = (7, 6)
+CHECKERBOARD = (6, 8)
 
 
 # stop the iteration when specified
@@ -38,7 +38,7 @@ prev_img_shape = None
 # jpg files alone
 currentDir = os.getcwd()
 dataDir = "{}/param/".format(currentDir)
-images = glob.glob(os.path.join(dataDir, "images", "calib_*.png"))
+images = glob.glob(os.path.join(dataDir, "images", "*.png"))
 
 for filename in images:
     image = cv2.imread(filename)

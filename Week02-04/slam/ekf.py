@@ -241,6 +241,7 @@ class EKF:
     def state_transition(self, raw_drive_meas):
         n = self.number_landmarks()*2 + 3
         F = np.eye(n)
+        
         F[0:3,0:3] = self.robot.derivative_drive(raw_drive_meas)
         return F
 
